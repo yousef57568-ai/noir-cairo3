@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOIR CAIRO | Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Montserrat;
+background:#000;
+color:#fff;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px 40px;
+position:fixed;
+top:0;
+width:100%;
+background:rgba(0,0,0,.8);
+}
+
+.logo{
+color:#D4AF37;
+font-family:"Cormorant Garamond";
+letter-spacing:3px;
+}
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:70px;
+font-family:"Cormorant Garamond";
+}
+
+.section{
+padding:100px 40px;
+text-align:center;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.card{
+background:#111;
+padding:20px;
+border:1px solid #222;
+}
+
+button{
+background:#D4AF37;
+border:none;
+padding:10px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#b8962e;
+}
+
+.cart-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#D4AF37;
+padding:10px 15px;
+color:#000;
+cursor:pointer;
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+justify-content:center;
+align-items:center;
+}
+
+.modal-box{
+background:#111;
+padding:20px;
+width:300px;
+}
+
+.item{
+margin:5px 0;
+font-size:14px;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">NOIR CAIRO</div>
+</nav>
+
+<div class="hero">
+<h1>NOIR CAIRO</h1>
+<p>Luxury Streetwear Brand</p>
+</div>
+
+<section class="section">
+<h2>Products</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>NOIR I</h3>
+<p>499 EGP</p>
+<button onclick="add('NOIR I',499)">Add to Cart</button>
+</div>
+
+<div class="card">
+<h3>NOIR II</h3>
+<p>499 EGP</p>
+<button onclick="add('NOIR II',499)">Add to Cart</button>
+</div>
+
+<div class="card">
+<h3>NOIR III</h3>
+<p>549 EGP</p>
+<button onclick="add('NOIR III',549)">Add to Cart</button>
+</div>
+
+<div class="card">
+<h3>NOIR IV</h3>
+<p>549 EGP</p>
+<button onclick="add('NOIR IV',549)">Add to Cart</button>
+</div>
+
+</div>
+</section>
+
+<div class="cart-btn" onclick="openCart()">
+Cart 🛒 (<span id="count">0</span>)
+</div>
+
+<div class="modal" id="cart">
+<div class="modal-box">
+<h3>Your Cart</h3>
+<div id="items"></div>
+<button onclick="checkout()">Checkout WhatsApp</button>
+<button onclick="closeCart()" style="background:#333;color:#fff;margin-top:10px;">Close</button>
+</div>
+</div>
+
+<script>
+let cart=[];
+const phone="201127002206";
+
+function add(name,price){
+cart.push({name,price});
+document.getElementById("count").innerText=cart.length;
+}
+
+function openCart(){
+let html="";
+cart.forEach(i=>{
+html+=`<div class='item'>${i.name} - ${i.price} EGP</div>`;
+});
+document.getElementById("items").innerHTML=html || "Cart empty";
+document.getElementById("cart").style.display="flex";
+}
+
+function closeCart(){
+document.getElementById("cart").style.display="none";
+}
+
+function checkout(){
+if(cart.length===0)return;
+
+let msg="Order:%0A";
+cart.forEach(i=>{
+msg+=`${i.name} - ${i.price} EGP%0A`;
+});
+
+window.open(`https://wa.me/${phone}?text=${msg}`);
+}
+</script>
+
+</body>
+</html>
